@@ -1,29 +1,57 @@
-# MarketLens Dashboard
+<p align="center">
+  <img src="./public/marketlens-mark.svg" width="88" alt="MarketLens logo" />
+</p>
 
-Read-only market intelligence dashboard for Meridian.
+<h1 align="center">MarketLens Dashboard</h1>
 
-## Scope
+<p align="center">
+  A public market dashboard for stocks, crypto, research notes, and risk signals.
+</p>
 
-- Public market overview
-- Popular Korean stocks, US stocks, and Upbit crypto assets
-- Public-safe report archive
-- Public risk notes
-- No brokerage controls
-- No account data
-- No order placement or trading features
+<p align="center">
+  <a href="https://marketlens-dashboard-two.vercel.app">Live dashboard</a>
+  ·
+  <a href="https://marketlens-dashboard-two.vercel.app/?lang=ko">Korean</a>
+  ·
+  <a href="https://marketlens-dashboard-two.vercel.app/?lang=en">English</a>
+</p>
+
+## Overview
+
+MarketLens is a service-ready dashboard for monitoring popular assets across
+Korean equities, US equities, and crypto markets. It is designed as a public,
+read-only information product: prices, report archives, risk notes, and market
+context are visible, while private ingestion and operational systems remain
+outside the frontend.
+
+## Features
+
+- English and Korean interface
+- Popular asset board for Korean stocks, US stocks, and Upbit KRW pairs
+- Live price snapshots from a public-safe Supabase data layer
+- Research reports grouped by publication date
+- Risk notes and data-source status panels
+- Vercel-ready Next.js deployment
+
+## Architecture
+
+```text
+Market data jobs
+  -> Supabase public dashboard tables
+  -> MarketLens Next.js app
+  -> Vercel production deployment
+```
+
+The frontend uses only public Supabase read access. Private API keys, service
+role credentials, trading infrastructure, and account data do not belong in this
+repository or in frontend deployment variables.
 
 ## Environment
-
-Create the deployment environment from `.env.example`:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
-
-Only the Supabase anon key belongs in the frontend. Do not add service-role keys,
-broker credentials, account numbers, or TradingClaw private env values to this
-repository or to public deployment variables.
 
 ## Development
 
@@ -32,7 +60,7 @@ npm install
 npm run dev
 ```
 
-## Checks
+## Quality Checks
 
 ```bash
 npm run lint
@@ -41,11 +69,9 @@ npm run build
 
 ## Deployment
 
-Vercel is the preferred production target. Configure only:
+The production deployment target is Vercel. Configure:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-Supabase RLS must keep `research_reports`, `trade_orders`, brokerage data, and
-raw operational logs private. The public app should read only the dashboard
-tables created for MarketLens.
+Do not configure private service keys or broker credentials in the web project.

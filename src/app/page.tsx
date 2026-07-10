@@ -7,9 +7,9 @@ import {
   FileText,
   Gauge,
   Languages,
-  Radio,
   Search,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { AssetMixChart } from "@/components/asset-mix-chart";
 import { getDashboardData, latestPriceMap, type Asset, type DashboardReport } from "@/lib/market-data";
@@ -20,14 +20,14 @@ type Lang = "en" | "ko";
 
 const copy = {
   en: {
-    subtitle: "Public market intelligence",
+    subtitle: "Markets, reports, and risk signals in one view",
     assets: "Assets",
     priced: "Priced",
     reports: "Reports",
     risks: "Risks",
-    connected: "Supabase public read connected",
-    fallback: "Using local fallback universe",
-    readOnly: "Read-only dashboard. No brokerage, account, or order controls.",
+    connected: "Live data layer connected",
+    fallback: "Reference asset universe loaded",
+    readOnly: "Public information dashboard for market monitoring.",
     popularAssets: "Popular Assets",
     asset: "Asset",
     market: "Market",
@@ -37,11 +37,11 @@ const copy = {
     assetMix: "Asset Mix",
     researchReports: "Research Reports",
     noReports: "No published dashboard reports yet",
-    noReportsDetail: "Morning briefs, weekly reviews, and public-safe research summaries will appear here.",
+    noReportsDetail: "Market briefs, weekly reviews, and research summaries will appear here.",
     fullReport: "Full report available in the dashboard archive.",
     riskNotes: "Risk Notes",
     noRisks: "No active public risk notes",
-    noRisksDetail: "Macro, event, and volatility alerts will appear when Meridian publishes them.",
+    noRisksDetail: "Macro, event, and volatility alerts will appear when published.",
     dataFeeds: "Data Feeds",
     crypto: "Crypto",
     koreaStocks: "Korea stocks",
@@ -49,18 +49,18 @@ const copy = {
     reportsFeed: "Reports",
     kisPrimary: "KIS primary",
     kisFinnhub: "KIS, Finnhub fallback",
-    meridianTradingClaw: "Meridian / TradingClaw",
+    meridianTradingClaw: "MarketLens Research",
     language: "Language",
   },
   ko: {
-    subtitle: "공개 시장 인텔리전스",
+    subtitle: "시장, 리포트, 리스크 시그널을 한 화면에",
     assets: "자산",
     priced: "가격",
     reports: "리포트",
     risks: "리스크",
-    connected: "Supabase 공개 읽기 연결됨",
-    fallback: "로컬 기본 자산 사용 중",
-    readOnly: "읽기 전용 대시보드. 계좌, 주문, 매매 기능 없음.",
+    connected: "실시간 데이터 레이어 연결됨",
+    fallback: "기본 자산 유니버스 로드됨",
+    readOnly: "시장 모니터링용 공개 정보 대시보드.",
     popularAssets: "인기 자산",
     asset: "자산",
     market: "시장",
@@ -70,7 +70,7 @@ const copy = {
     assetMix: "자산 구성",
     researchReports: "리서치 리포트",
     noReports: "게시된 대시보드 리포트 없음",
-    noReportsDetail: "장전 브리핑, 주간 리뷰, 공개용 리서치 요약이 여기에 표시됩니다.",
+    noReportsDetail: "시장 브리핑, 주간 리뷰, 리서치 요약이 여기에 표시됩니다.",
     fullReport: "전체 리포트는 대시보드 아카이브에서 확인 가능합니다.",
     riskNotes: "리스크 노트",
     noRisks: "활성 공개 리스크 노트 없음",
@@ -82,7 +82,7 @@ const copy = {
     reportsFeed: "리포트",
     kisPrimary: "KIS 우선",
     kisFinnhub: "KIS, Finnhub 대체",
-    meridianTradingClaw: "Meridian / TradingClaw",
+    meridianTradingClaw: "MarketLens Research",
     language: "언어",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -136,8 +136,8 @@ export default async function Home({
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-500">
-                <Radio className="h-4 w-4 text-blue-600" />
-                MarketLens Dashboard
+                <Image src="/marketlens-mark.svg" alt="" width={20} height={20} className="rounded" />
+                MarketLens
               </div>
               <h1 className="mt-2 text-2xl font-semibold tracking-normal text-zinc-950 sm:text-3xl">
                 {t.subtitle}

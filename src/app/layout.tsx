@@ -14,7 +14,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MarketLens Dashboard",
-  description: "Read-only market intelligence dashboard powered by Meridian.",
+  description: "A public market dashboard for stocks, crypto, research notes, and risk signals.",
+  openGraph: {
+    title: "MarketLens Dashboard",
+    description: "Track popular stocks, crypto assets, market reports, and risk notes.",
+    siteName: "MarketLens",
+    type: "website",
+  },
+  icons: {
+    icon: "/marketlens-mark.svg",
+  },
 };
 
 export default function RootLayout({
