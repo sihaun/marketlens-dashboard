@@ -1,5 +1,4 @@
 import {
-  Activity,
   AlertTriangle,
   BarChart3,
   CalendarDays,
@@ -11,7 +10,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { AssetMixChart } from "@/components/asset-mix-chart";
 import { getDashboardData, latestPriceMap, type Asset, type DashboardReport } from "@/lib/market-data";
 
 export const dynamic = "force-dynamic";
@@ -20,9 +18,7 @@ type Lang = "en" | "ko";
 
 const copy = {
   en: {
-    subtitle: "Markets, reports, and risk signals in one view",
-    assets: "Assets",
-    priced: "Priced",
+    subtitle: "Market Intelligence",
     reports: "Reports",
     risks: "Risks",
     connected: "Live data layer connected",
@@ -34,7 +30,6 @@ const copy = {
     price: "Price",
     change: "Change",
     pending: "Pending",
-    assetMix: "Asset Mix",
     researchReports: "Research Reports",
     noReports: "No published dashboard reports yet",
     noReportsDetail: "Market briefs, weekly reviews, and research summaries will appear here.",
@@ -49,13 +44,11 @@ const copy = {
     reportsFeed: "Reports",
     kisPrimary: "KIS primary",
     kisFinnhub: "KIS, Finnhub fallback",
-    meridianTradingClaw: "MarketLens Research",
+    reportsProvider: "MarketLens Research",
     language: "Language",
   },
   ko: {
-    subtitle: "시장, 리포트, 리스크 시그널을 한 화면에",
-    assets: "자산",
-    priced: "가격",
+    subtitle: "마켓 인텔리전스",
     reports: "리포트",
     risks: "리스크",
     connected: "실시간 데이터 레이어 연결됨",
@@ -67,7 +60,6 @@ const copy = {
     price: "가격",
     change: "등락",
     pending: "대기",
-    assetMix: "자산 구성",
     researchReports: "리서치 리포트",
     noReports: "게시된 대시보드 리포트 없음",
     noReportsDetail: "시장 브리핑, 주간 리뷰, 리서치 요약이 여기에 표시됩니다.",
@@ -82,7 +74,7 @@ const copy = {
     reportsFeed: "리포트",
     kisPrimary: "KIS 우선",
     kisFinnhub: "KIS, Finnhub 대체",
-    meridianTradingClaw: "MarketLens Research",
+    reportsProvider: "MarketLens Research",
     language: "언어",
   },
 } satisfies Record<Lang, Record<string, string>>;
@@ -119,14 +111,6 @@ export default async function Home({
   const labels = assetTypeLabels[lang];
   const { assets, prices, reports, risks, connected } = await getDashboardData();
   const priceBySymbol = latestPriceMap(prices);
-  const mix = Object.entries(
-    assets.reduce<Record<string, number>>((acc, asset) => {
-      acc[labels[asset.asset_type]] = (acc[labels[asset.asset_type]] ?? 0) + 1;
-      return acc;
-    }, {}),
-  ).map(([name, value]) => ({ name, value }));
-
-  const pricedCount = assets.filter((asset) => priceBySymbol.has(asset.symbol)).length;
   const reportGroups = groupReportsByDate(reports, lang);
 
   return (
@@ -142,12 +126,6 @@ export default async function Home({
               <h1 className="mt-2 text-2xl font-semibold tracking-normal text-zinc-950 sm:text-3xl">
                 {t.subtitle}
               </h1>
-            </div>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <Metric label={t.assets} value={assets.length.toString()} />
-              <Metric label={t.priced} value={pricedCount.toString()} />
-              <Metric label={t.reports} value={reports.length.toString()} />
-              <Metric label={t.risks} value={risks.length.toString()} />
             </div>
           </div>
           <div className="flex flex-col gap-3 text-sm text-zinc-600 lg:flex-row lg:items-center lg:justify-between">
@@ -168,55 +146,41 @@ export default async function Home({
 
       <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
         <section className="space-y-4">
-          <div className="grid gap-4 xl:grid-cols-[1.35fr_0.65fr]">
-            <Panel title={t.popularAssets} icon={<BarChart3 className="h-4 w-4" />}>
-              <div className="overflow-hidden rounded-md border border-zinc-200">
-                <div className="grid grid-cols-[1.1fr_0.8fr_0.8fr_0.8fr] bg-zinc-100 px-3 py-2 text-xs font-semibold uppercase text-zinc-500">
-                  <span>{t.asset}</span>
-                  <span>{t.market}</span>
-                  <span>{t.price}</span>
-                  <span>{t.change}</span>
-                </div>
-                <div className="divide-y divide-zinc-200 bg-white">
-                  {assets.map((asset) => {
-                    const price = priceBySymbol.get(asset.symbol);
-                    return (
-                      <div
-                        key={asset.symbol}
-                        className="grid min-h-14 grid-cols-[1.1fr_0.8fr_0.8fr_0.8fr] items-center px-3 py-2 text-sm"
-                      >
-                        <div className="min-w-0">
-                          <div className="truncate font-medium text-zinc-950">{asset.display_symbol}</div>
-                          <div className="truncate text-xs text-zinc-500">{asset.name}</div>
-                        </div>
-                        <div>
-                          <span className="rounded bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700">
-                            {labels[asset.asset_type]}
-                          </span>
-                        </div>
-                        <div className="font-mono text-sm">
-                          {price?.price == null ? t.pending : formatPrice(price.price, price.currency)}
-                        </div>
-                        <Change value={price?.change_percent ?? null} pending={t.pending} />
+          <Panel title={t.popularAssets} icon={<BarChart3 className="h-4 w-4" />}>
+            <div className="overflow-hidden rounded-md border border-zinc-200">
+              <div className="grid grid-cols-[1.2fr_0.7fr_0.8fr_0.7fr] bg-zinc-100 px-3 py-2 text-xs font-semibold uppercase text-zinc-500">
+                <span>{t.asset}</span>
+                <span>{t.market}</span>
+                <span>{t.price}</span>
+                <span>{t.change}</span>
+              </div>
+              <div className="divide-y divide-zinc-200 bg-white">
+                {assets.map((asset) => {
+                  const price = priceBySymbol.get(asset.symbol);
+                  return (
+                    <div
+                      key={asset.symbol}
+                      className="grid min-h-14 grid-cols-[1.2fr_0.7fr_0.8fr_0.7fr] items-center px-3 py-2 text-sm"
+                    >
+                      <div className="min-w-0">
+                        <div className="truncate font-medium text-zinc-950">{asset.name}</div>
+                        <div className="truncate text-xs text-zinc-500">{asset.display_symbol}</div>
                       </div>
-                    );
-                  })}
-                </div>
+                      <div>
+                        <span className="rounded bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700">
+                          {labels[asset.asset_type]}
+                        </span>
+                      </div>
+                      <div className="font-mono text-sm">
+                        {price?.price == null ? t.pending : formatPrice(price.price, price.currency)}
+                      </div>
+                      <Change value={price?.change_percent ?? null} pending={t.pending} />
+                    </div>
+                  );
+                })}
               </div>
-            </Panel>
-
-            <Panel title={t.assetMix} icon={<Activity className="h-4 w-4" />}>
-              <AssetMixChart data={mix} />
-              <div className="grid grid-cols-2 gap-2">
-                {mix.map((slice) => (
-                  <div key={slice.name} className="rounded-md border border-zinc-200 bg-white px-3 py-2">
-                    <div className="text-xs text-zinc-500">{slice.name}</div>
-                    <div className="text-lg font-semibold">{slice.value}</div>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </div>
+            </div>
+          </Panel>
 
           <Panel title={t.researchReports} icon={<FileText className="h-4 w-4" />}>
             {reportGroups.length ? (
@@ -275,7 +239,7 @@ export default async function Home({
               <FeedRow label={t.crypto} value="Upbit" />
               <FeedRow label={t.koreaStocks} value={t.kisPrimary} />
               <FeedRow label={t.usStocks} value={t.kisFinnhub} />
-              <FeedRow label={t.reportsFeed} value={t.meridianTradingClaw} />
+              <FeedRow label={t.reportsFeed} value={t.reportsProvider} />
             </div>
           </Panel>
         </aside>
@@ -318,15 +282,6 @@ function Panel({
       </div>
       {children}
     </section>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2">
-      <div className="text-xs text-zinc-500">{label}</div>
-      <div className="font-mono text-lg font-semibold text-zinc-950">{value}</div>
-    </div>
   );
 }
 
