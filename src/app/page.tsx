@@ -47,7 +47,9 @@ const copy = {
     kisFinnhub: "KIS, Finnhub fallback",
     reportsProvider: "MarketLens Research",
     language: "Language",
+    marketThemes: "Core Themes",
     physicalAi: "Physical AI",
+    physicalAiDesc: "Robotics, humanoids, automation, and listed market proxies.",
   },
   ko: {
     subtitle: "마켓 인텔리전스",
@@ -78,7 +80,9 @@ const copy = {
     kisFinnhub: "KIS, Finnhub 대체",
     reportsProvider: "MarketLens Research",
     language: "언어",
+    marketThemes: "핵심 테마",
     physicalAi: "피지컬 AI",
+    physicalAiDesc: "로봇, 휴머노이드, 자동화, 상장 프록시 분석.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -142,16 +146,7 @@ export default async function Home({
                 <span>{t.readOnly}</span>
               </div>
             </div>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <Link
-                href="/physical-ai"
-                className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white px-3 text-xs font-semibold text-zinc-700 transition hover:border-zinc-300 hover:bg-zinc-50"
-              >
-                <Bot className="h-4 w-4 text-blue-600" />
-                {t.physicalAi}
-              </Link>
-              <LanguageSwitch lang={lang} label={t.language} />
-            </div>
+            <LanguageSwitch lang={lang} label={t.language} />
           </div>
         </div>
       </header>
@@ -227,6 +222,19 @@ export default async function Home({
         </section>
 
         <aside className="space-y-4">
+          <Panel title={t.marketThemes} icon={<Bot className="h-4 w-4" />}>
+            <Link
+              href={`/physical-ai?lang=${lang}`}
+              className="block rounded-md border border-zinc-200 bg-white p-4 transition hover:border-blue-200 hover:bg-blue-50/40"
+            >
+              <div className="flex items-center gap-2 text-sm font-semibold text-zinc-950">
+                <Bot className="h-4 w-4 text-blue-600" />
+                {t.physicalAi}
+              </div>
+              <p className="mt-2 text-sm leading-6 text-zinc-600">{t.physicalAiDesc}</p>
+            </Link>
+          </Panel>
+
           <Panel title={t.riskNotes} icon={<AlertTriangle className="h-4 w-4" />}>
             {risks.length ? (
               <div className="space-y-3">
