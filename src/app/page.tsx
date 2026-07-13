@@ -82,7 +82,7 @@ const copy = {
     language: "언어",
     marketThemes: "핵심 테마",
     physicalAi: "피지컬 AI",
-    physicalAiDesc: "로봇, 휴머노이드, 자동화, 상장 프록시 분석.",
+    physicalAiDesc: "로봇·휴머노이드·자동화 테마.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

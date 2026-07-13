@@ -43,11 +43,11 @@ const copy = {
     back: "MarketLens",
     language: "언어",
     label: "핵심 테마",
-    title: "피지컬 AI: 로봇 사이클을 상장주식으로 보는 지도",
+    title: "피지컬 AI: 로봇 사이클 지도",
     intro:
-      "휴머노이드와 산업용 로봇은 아직 초기 구간이다. 그래서 투자 관점에서는 특정 로봇 회사 하나보다 플랫폼, 공장 수요, 테스트 자동화, 상장 프록시를 같이 보는 편이 낫다.",
+      "특정 로봇 회사 하나보다 플랫폼, 공장 수요, 자동화 장비를 같이 봐야 하는 구간.",
     updated: "업데이트",
-    note: "공개 시장 리서치이며 매매 지시가 아니다.",
+    note: "공개 시장 리서치. 매매 지시 아님.",
     thesis: "핵심 결론",
     basket: "상장 노출도 바스켓",
     outlook: "주가 변동 전망",
@@ -57,8 +57,8 @@ const copy = {
     risk: "Risk",
     sources: "Sources",
     riskBody: [
-      "휴머노이드 로봇은 데모와 실제 공장 ROI 사이의 거리가 아직 크다. 고밸류 순수 로봇주는 수주 지연, 마진 압박, 상용화 일정 지연에 크게 흔들릴 수 있다.",
-      "현대차는 Boston Dynamics에 가장 가까운 프록시지만 본업은 자동차다. 단기 주가에는 환율, EV 경쟁, 관세, 노조, 자동차 마진이 로봇 테마보다 더 크게 작용할 수 있다.",
+      "데모와 공장 ROI는 다르다. 고밸류 순수주는 수주 지연에 크게 흔들림.",
+      "현대차는 가장 가까운 프록시. 다만 단기 주가는 자동차 업황 영향이 더 큼.",
     ],
   },
 } satisfies Record<Lang, Record<string, string | string[]>>;
@@ -87,21 +87,21 @@ const thesis = {
   ko: [
     {
       label: "가장 깔끔한 Boston Dynamics 프록시",
-      value: "Hyundai Motor",
+      value: "현대차",
       detail:
-        "Boston Dynamics는 별도 상장사가 아니다. 현대차가 가장 직접적인 상장 노출이지만, 실적 대부분은 여전히 자동차 사이클이 좌우한다.",
+        "Boston Dynamics는 비상장. 직접 노출은 현대차. 다만 본업은 자동차.",
     },
     {
       label: "가장 강한 플랫폼 프록시",
-      value: "NVIDIA",
+      value: "엔비디아",
       detail:
-        "로봇 학습, 시뮬레이션, 엣지 추론, 개발자 스택이 NVIDIA로 연결된다. 다만 이미 시장 기대가 많이 붙은 고품질 노출이다.",
+        "로봇 학습, 시뮬레이션, 엣지 추론 노출. 이미 기대가 많이 붙은 고품질주.",
     },
     {
       label: "가장 높은 베타 구간",
-      value: "Korea robot pure plays",
+      value: "국내 로봇 순수주",
       detail:
-        "두산로보틱스와 레인보우로보틱스는 테마에 민감하게 움직일 수 있지만, 단기 실적보다 기대가 앞서 있다.",
+        "두산로보틱스와 레인보우로보틱스. 테마 민감도 높음. 실적보다 기대가 앞섬.",
     },
   ],
 } satisfies Record<Lang, Array<{ label: string; value: string; detail: string }>>;
@@ -159,52 +159,52 @@ const leaders = {
   ],
   ko: [
     {
-      name: "Hyundai Motor",
+      name: "현대차",
       ticker: "005380.KS",
       role: "Boston Dynamics 노출",
-      signal: "Boston Dynamics가 가장 직접적인 촉매지만, 주식은 아직 자동차 회사로 먼저 거래된다.",
+      signal: "Boston Dynamics 직접 노출. 그래도 시장은 자동차주로 먼저 봄.",
       data: "444,000원, 6개월 +45.3%, 1개월 -26.9%, 선행 P/E 9.1배",
-      view: "Atlas 배치, 내부 공장 도입, IPO 선택지가 더 선명해질수록 리레이팅 여지가 커진다.",
+      view: "Atlas 배치, 내부 공장 도입, IPO 기대가 핵심 촉매.",
     },
     {
-      name: "NVIDIA",
+      name: "엔비디아",
       ticker: "NVDA",
       role: "피지컬 AI 플랫폼",
-      signal: "Isaac, Cosmos, 시뮬레이션, 엣지 컴퓨팅, 로봇 파운데이션 모델이 모두 NVIDIA 쪽으로 연결된다.",
+      signal: "Isaac, Cosmos, 엣지 AI 노출. 로봇 인프라의 중심축.",
       data: "210.96달러, 3개월 +14.8%, 6개월 +11.7%, 선행 P/E 16.5배",
-      view: "가장 질 좋은 노출이지만, 피지컬 AI는 거대한 AI 반도체 스토리 안의 한 조각이다.",
+      view: "가장 질 좋은 노출. 다만 이미 AI 기대가 많이 반영.",
     },
     {
-      name: "Teradyne",
+      name: "테라다인",
       ticker: "TER",
       role: "테스트 자동화와 협동로봇",
-      signal: "반도체 테스트 수요와 Universal Robots 노출이 AI 하드웨어와 공장 자동화를 같이 건드린다.",
+      signal: "반도체 테스트와 협동로봇 노출. 공장 자동화 수혜.",
       data: "359.60달러, 6개월 +61.8%, 선행 P/E 36.6배",
-      view: "삽과 곡괭이 성격의 종목이다. 다만 최근 상승이 커서 모멘텀 훼손에는 민감하다.",
+      view: "삽과 곡괭이 성격의 종목. 다만 최근 상승이 커서 모멘텀 훼손에는 민감.",
     },
     {
-      name: "Doosan Robotics",
+      name: "두산로보틱스",
       ticker: "454910.KS",
       role: "국내 협동로봇 순수주",
-      signal: "대기업보다 로봇 매출 노출은 깔끔하지만, 아직 수익성이 핵심 문제다.",
+      signal: "로봇 매출 노출은 깔끔함. 아직 수익성이 문제.",
       data: "70,100원, 1개월 -36.5%, 6개월 -13.7%, 선행 P/E 적자",
-      view: "수주, 마진, 휴머노이드 로드맵 근거가 좋아질 때까지는 고베타 관찰 종목에 가깝다.",
+      view: "고베타 관찰 종목. 수주와 마진 개선이 먼저 필요.",
     },
     {
-      name: "Rainbow Robotics",
+      name: "레인보우로보틱스",
       ticker: "277810.KQ",
       role: "삼성 연계 기대주",
-      signal: "삼성 로봇 로드맵 기대가 붙어 있는 국내 로봇 테마주다. 밸류에이션은 현재 실적보다 앞서 있다.",
+      signal: "삼성 로봇 로드맵 기대주. 실적보다 기대가 큼.",
       data: "415,000원, 1개월 -33.5%, 선행 P/E 349.3배",
-      view: "삼성 관련 촉매에는 크게 움직일 수 있지만, 기대가 식으면 하방도 크다.",
+      view: "촉매에는 강하게 반응. 기대가 식으면 하방도 큼.",
     },
     {
-      name: "Tesla",
+      name: "테슬라",
       ticker: "TSLA",
       role: "휴머노이드 옵션",
-      signal: "Optimus는 내러티브를 바꿀 수 있지만 EV, 마진, 실행, 지배구조 변동성이 같이 붙는다.",
+      signal: "Optimus 옵션. EV와 지배구조 리스크도 같이 붙음.",
       data: "407.76달러, 3개월 +18.0%, 선행 P/E 158.1배",
-      view: "휴머노이드가 실제로 스케일하면 가장 큰 스토리가 될 수 있지만, 밸류에이션은 가장 깔끔하지 않다.",
+      view: "상방 스토리는 큼. 밸류에이션은 가장 부담.",
     },
   ],
 } satisfies Record<Lang, Array<{ name: string; ticker: string; role: string; signal: string; data: string; view: string }>>;
@@ -235,19 +235,19 @@ const scenarios = {
       title: "기본 시나리오",
       probability: "55%",
       description:
-        "테마는 살아 있지만 주도주는 AI 반도체, 공장 자동화, 국내 로봇 순수주 사이에서 순환한다. 현대차는 리레이팅 여지가 생기고, 순수주는 수주와 마진이 확인되기 전까지 변동성이 크다.",
+        "테마는 유지. 주도주는 AI 반도체, 자동화, 국내 로봇주 사이에서 순환.",
     },
     {
       title: "강세 시나리오",
       probability: "25%",
       description:
-        "Atlas 배치 일정, NVIDIA 로봇 스택 채택, 리쇼어링 설비투자가 동시에 빨라진다. 현대차, Teradyne, 일부 국내 로봇주는 빠르게 재평가될 수 있다.",
+        "Atlas 배치, 엔비디아 로봇 스택, 리쇼어링 투자가 같이 붙는 그림.",
     },
     {
       title: "약세 시나리오",
       probability: "20%",
       description:
-        "휴머노이드 일정이 밀리고 비싼 로봇주는 디레이팅된다. 투자자는 다시 이익이 나는 AI 인프라로 몰린다. NVIDIA는 상대적으로 버티고, 현대차는 자동차 섹터 밸류로 돌아간다.",
+        "휴머노이드 일정 지연. 비싼 순수주는 디레이팅. 돈은 다시 실적주로 이동.",
     },
   ],
 } satisfies Record<Lang, Array<{ title: string; probability: string; description: string }>>;
@@ -279,22 +279,22 @@ const themes = {
     {
       icon: "cpu",
       title: "로봇 파운데이션 모델과 시뮬레이션",
-      body: "로봇은 데이터가 부족하고 현실 세계 실험은 느리다. 실제 판매량보다 시뮬레이션, 합성 데이터, 로봇 학습 프레임워크가 먼저 주목받을 수 있다.",
+      body: "현실 데이터는 부족하고 실험은 느림. 시뮬레이션과 합성 데이터가 먼저 뜰 수 있음.",
     },
     {
       icon: "factory",
       title: "내부 공장 수요",
-      body: "초기 핵심 고객은 소비자가 아니라 공장 주인이다. 활용률, 안전성, 투자 회수 기간을 자기 공장에서 먼저 검증할 수 있는 기업이 유리하다.",
+      body: "초기 고객은 소비자가 아니라 공장. 활용률과 안전성을 내부에서 먼저 검증.",
     },
     {
       icon: "building",
       title: "액추에이터, 감속기, 센서",
-      body: "휴머노이드가 양산으로 가면 부품 병목이 먼저 드러난다. 완성 로봇 브랜드보다 핵심 부품사가 먼저 재평가될 수 있다.",
+      body: "양산으로 가면 부품 병목이 먼저 보임. 핵심 부품사가 먼저 재평가될 수 있음.",
     },
     {
       icon: "bot",
       title: "협동로봇에서 휴머노이드로 가는 다리",
-      body: "협동로봇은 이미 공장 사용처가 있다. 오늘의 자동화 시장과 내일의 휴머노이드 시장을 잇는 현실적인 중간 단계다.",
+      body: "협동로봇은 이미 공장 사용처가 있음. 휴머노이드 전 단계의 현실적 수혜.",
     },
   ],
 } satisfies Record<Lang, Array<{ icon: "cpu" | "factory" | "building" | "bot"; title: string; body: string }>>;
@@ -309,8 +309,8 @@ const watchItems = {
   ],
   ko: [
     { label: "가장 직접적인 상장 프록시", value: "Boston Dynamics를 보유한 현대차" },
-    { label: "가장 강한 플랫폼 프록시", value: "Isaac, Cosmos, GR00T, edge AI의 NVIDIA" },
-    { label: "삽과 곡괭이 프록시", value: "테스트 자동화와 협동로봇의 Teradyne" },
+    { label: "가장 강한 플랫폼 프록시", value: "Isaac, Cosmos, GR00T의 엔비디아" },
+    { label: "삽과 곡괭이 프록시", value: "테스트 자동화와 협동로봇의 테라다인" },
     { label: "국내 고베타", value: "레인보우로보틱스와 두산로보틱스" },
     { label: "분산 노출", value: "IRBO, BOTZ, ROBO 로봇/AI ETF" },
   ],
@@ -325,11 +325,11 @@ const catalysts = {
     "Margin evidence from cobot vendors, not just prototype videos or conference demos",
   ],
   ko: [
-    "Boston Dynamics Atlas 생산 검증, 현대차/기아 공장 배치 마일스톤, IPO 준비 관련 뉴스",
-    "로봇 제조사, 시스템 통합사, 산업 연구소의 NVIDIA Isaac, Cosmos, GR00T 채택",
-    "제조업 리쇼어링과 자동화 설비투자 회복",
-    "국내 대기업의 휴머노이드, 협동로봇, 액추에이터, 감속기, 센서, 로봇 소프트웨어 투자",
-    "프로토타입 영상이 아니라 협동로봇 업체의 마진과 수주 개선",
+    "Boston Dynamics Atlas 생산 검증",
+    "현대차·기아 공장 배치 마일스톤",
+    "엔비디아 Isaac, Cosmos, GR00T 채택",
+    "리쇼어링과 자동화 설비투자 회복",
+    "협동로봇 업체의 마진과 수주 개선",
   ],
 } satisfies Record<Lang, string[]>;
 
