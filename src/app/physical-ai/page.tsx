@@ -1,18 +1,16 @@
 import {
   Activity,
   AlertTriangle,
-  ArrowLeft,
   Bot,
   Building2,
   Cpu,
   Factory,
-  Languages,
   LineChart,
   Link as LinkIcon,
   ShieldCheck,
   Zap,
 } from "lucide-react";
-import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 
 type Lang = "en" | "ko";
 
@@ -371,39 +369,20 @@ export default async function PhysicalAiPage({
   const t = copy[lang];
 
   return (
-    <main className="min-h-screen bg-[#f6f7f9] text-zinc-950">
-      <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <Link
-              href={`/?lang=${lang}`}
-              className="inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-zinc-950"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {t.back}
-            </Link>
-            <LanguageSwitch lang={lang} label={String(t.language)} />
-          </div>
-          <div className="grid gap-4 lg:grid-cols-[1fr_340px] lg:items-end">
-            <div>
-              <div className="flex items-center gap-2 text-sm font-semibold text-blue-700">
-                <Bot className="h-4 w-4" />
-                {t.label}
-              </div>
-              <h1 className="mt-2 max-w-4xl text-3xl font-semibold tracking-normal text-zinc-950 sm:text-4xl">
-                {t.title}
-              </h1>
-              <p className="mt-3 max-w-3xl text-base leading-7 text-zinc-600">{t.intro}</p>
-            </div>
-            <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
-              <div className="font-semibold text-zinc-950">{t.updated}</div>
-              <div>2026-07-13 KST</div>
-              <div className="mt-2 text-xs text-zinc-500">{t.note}</div>
-            </div>
-          </div>
+    <AppShell
+      lang={lang}
+      active="physical-ai"
+      eyebrow={String(t.label)}
+      title={String(t.title)}
+      description={String(t.intro)}
+      meta={
+        <div className="rounded-md border border-zinc-200 bg-zinc-50 p-4 text-sm leading-6 text-zinc-600">
+          <div className="font-semibold text-zinc-950">{t.updated}</div>
+          <div>2026-07-13 KST</div>
+          <div className="mt-2 text-xs text-zinc-500">{t.note}</div>
         </div>
-      </header>
-
+      }
+    >
       <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
         <section className="space-y-4">
           <Panel title={String(t.thesis)} icon={<ShieldCheck className="h-4 w-4" />}>
@@ -510,24 +489,7 @@ export default async function PhysicalAiPage({
           </Panel>
         </aside>
       </div>
-    </main>
-  );
-}
-
-function LanguageSwitch({ lang, label }: { lang: Lang; label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Languages className="h-4 w-4 text-zinc-500" />
-      <span className="text-xs font-medium text-zinc-500">{label}</span>
-      <div className="flex overflow-hidden rounded-md border border-zinc-200 bg-zinc-50">
-        <Link className={lang === "en" ? activeToggleClass : toggleClass} href="/physical-ai?lang=en">
-          EN
-        </Link>
-        <Link className={lang === "ko" ? activeToggleClass : toggleClass} href="/physical-ai?lang=ko">
-          KO
-        </Link>
-      </div>
-    </div>
+    </AppShell>
   );
 }
 
@@ -579,6 +541,3 @@ function themeIcon(icon: "cpu" | "factory" | "building" | "bot") {
   if (icon === "building") return <Building2 className="h-5 w-5" />;
   return <Bot className="h-5 w-5" />;
 }
-
-const toggleClass = "px-3 py-1.5 text-xs font-semibold text-zinc-600";
-const activeToggleClass = "bg-zinc-950 px-3 py-1.5 text-xs font-semibold text-white";

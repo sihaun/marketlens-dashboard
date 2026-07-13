@@ -5,12 +5,11 @@ import {
   Database,
   FileText,
   Gauge,
-  Languages,
   Bot,
   Search,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 import { getDashboardData, latestPriceMap, type Asset, type DashboardReport } from "@/lib/market-data";
 
 export const dynamic = "force-dynamic";
@@ -121,36 +120,23 @@ export default async function Home({
   const reportGroups = groupReportsByDate(reports, lang);
 
   return (
-    <main className="min-h-screen bg-[#f6f7f9] text-zinc-950">
-      <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <div className="flex items-center gap-2 text-sm font-medium text-zinc-500">
-                <Image src="/marketlens-mark.svg" alt="" width={20} height={20} className="rounded" />
-                MarketLens
-              </div>
-              <h1 className="mt-2 text-2xl font-semibold tracking-normal text-zinc-950 sm:text-3xl">
-                {t.subtitle}
-              </h1>
-            </div>
+    <AppShell
+      lang={lang}
+      active="overview"
+      title={t.subtitle}
+      meta={
+        <div className="space-y-2 rounded-md border border-zinc-200 bg-zinc-50 p-3 text-sm text-zinc-600">
+          <div className="flex items-center gap-2">
+            <Database className="h-4 w-4 text-emerald-600" />
+            <span>{connected ? t.connected : t.fallback}</span>
           </div>
-          <div className="flex flex-col gap-3 text-sm text-zinc-600 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
-              <div className="flex items-center gap-2">
-                <Database className="h-4 w-4 text-emerald-600" />
-                <span>{connected ? t.connected : t.fallback}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Gauge className="h-4 w-4 text-amber-600" />
-                <span>{t.readOnly}</span>
-              </div>
-            </div>
-            <LanguageSwitch lang={lang} label={t.language} />
+          <div className="flex items-center gap-2">
+            <Gauge className="h-4 w-4 text-amber-600" />
+            <span>{t.readOnly}</span>
           </div>
         </div>
-      </header>
-
+      }
+    >
       <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
         <section className="space-y-4">
           <Panel title={t.popularAssets} icon={<BarChart3 className="h-4 w-4" />}>
@@ -264,24 +250,7 @@ export default async function Home({
           </Panel>
         </aside>
       </div>
-    </main>
-  );
-}
-
-function LanguageSwitch({ lang, label }: { lang: Lang; label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Languages className="h-4 w-4 text-zinc-500" />
-      <span className="text-xs font-medium text-zinc-500">{label}</span>
-      <div className="flex overflow-hidden rounded-md border border-zinc-200 bg-zinc-50">
-        <Link className={lang === "en" ? activeToggleClass : toggleClass} href="/?lang=en">
-          EN
-        </Link>
-        <Link className={lang === "ko" ? activeToggleClass : toggleClass} href="/?lang=ko">
-          KO
-        </Link>
-      </div>
-    </div>
+    </AppShell>
   );
 }
 
@@ -385,6 +354,3 @@ function severityClass(severity: "low" | "medium" | "high") {
   if (severity === "medium") return `${base} bg-amber-100 text-amber-700`;
   return `${base} bg-emerald-100 text-emerald-700`;
 }
-
-const toggleClass = "px-3 py-1.5 text-xs font-semibold text-zinc-600";
-const activeToggleClass = "bg-zinc-950 px-3 py-1.5 text-xs font-semibold text-white";
