@@ -6,6 +6,7 @@ import {
   FileText,
   Gauge,
   Languages,
+  Bot,
   Search,
 } from "lucide-react";
 import Image from "next/image";
@@ -46,6 +47,7 @@ const copy = {
     kisFinnhub: "KIS, Finnhub fallback",
     reportsProvider: "MarketLens Research",
     language: "Language",
+    physicalAi: "Physical AI",
   },
   ko: {
     subtitle: "마켓 인텔리전스",
@@ -76,6 +78,7 @@ const copy = {
     kisFinnhub: "KIS, Finnhub 대체",
     reportsProvider: "MarketLens Research",
     language: "언어",
+    physicalAi: "피지컬 AI",
   },
 } satisfies Record<Lang, Record<string, string>>;
 
@@ -139,7 +142,16 @@ export default async function Home({
                 <span>{t.readOnly}</span>
               </div>
             </div>
-            <LanguageSwitch lang={lang} label={t.language} />
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Link
+                href="/physical-ai"
+                className="inline-flex h-8 items-center justify-center gap-2 rounded-md border border-zinc-200 bg-white px-3 text-xs font-semibold text-zinc-700 transition hover:border-zinc-300 hover:bg-zinc-50"
+              >
+                <Bot className="h-4 w-4 text-blue-600" />
+                {t.physicalAi}
+              </Link>
+              <LanguageSwitch lang={lang} label={t.language} />
+            </div>
           </div>
         </div>
       </header>
