@@ -6,7 +6,10 @@ import {
   FileText,
   Gauge,
   Bot,
+  LineChart,
   Search,
+  Signal,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
@@ -49,6 +52,11 @@ const copy = {
     marketThemes: "Core Themes",
     physicalAi: "Physical AI",
     physicalAiDesc: "Robotics, humanoids, automation, and listed market proxies.",
+    aiWorkspace: "AI Research Terminal",
+    stockPicker: "Idea Queue",
+    signalStack: "Signal Stack",
+    smartMoney: "Smart Money Watch",
+    marketBrief: "Market Brief",
   },
   ko: {
     subtitle: "마켓 인텔리전스",
@@ -82,8 +90,90 @@ const copy = {
     marketThemes: "핵심 테마",
     physicalAi: "피지컬 AI",
     physicalAiDesc: "로봇·휴머노이드·자동화 테마.",
+    aiWorkspace: "AI 리서치 터미널",
+    stockPicker: "아이디어 큐",
+    signalStack: "시그널 스택",
+    smartMoney: "스마트머니 관찰",
+    marketBrief: "마켓 브리프",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+const aiModules = {
+  en: [
+    {
+      title: "Ask Meridian",
+      body: "Plain-language research prompts for stocks, sectors, themes, and portfolio questions.",
+      status: "Ready",
+    },
+    {
+      title: "AI Stock Picker",
+      body: "Ranked idea queue using price action, fundamentals, news, and theme exposure.",
+      status: "Live shell",
+    },
+    {
+      title: "Smart Signals",
+      body: "Momentum, valuation, event, and risk flags collected into one signal stack.",
+      status: "Building",
+    },
+    {
+      title: "Smart Money",
+      body: "Insider, institutional, congress, and whale-flow tracking slot. Data source pending.",
+      status: "Next",
+    },
+  ],
+  ko: [
+    {
+      title: "Ask Meridian",
+      body: "종목·섹터·테마 질문용 리서치 창.",
+      status: "준비",
+    },
+    {
+      title: "AI Stock Picker",
+      body: "가격, 실적, 뉴스, 테마 노출 기반 아이디어 큐.",
+      status: "셸 적용",
+    },
+    {
+      title: "Smart Signals",
+      body: "모멘텀, 밸류, 이벤트, 리스크 플래그 묶음.",
+      status: "구축 중",
+    },
+    {
+      title: "Smart Money",
+      body: "내부자, 기관, 의회, 큰손 흐름 추적 슬롯.",
+      status: "다음",
+    },
+  ],
+} satisfies Record<Lang, Array<{ title: string; body: string; status: string }>>;
+
+const ideaQueue = {
+  en: [
+    { name: "NVIDIA", ticker: "NVDA", score: "88", tag: "AI platform", note: "Quality leader. Valuation still the check." },
+    { name: "Hyundai Motor", ticker: "005380.KS", score: "81", tag: "Boston Dynamics", note: "Direct proxy. Auto cycle noise." },
+    { name: "Teradyne", ticker: "TER", score: "76", tag: "Automation picks", note: "Strong move. Watch momentum break." },
+    { name: "Doosan Robotics", ticker: "454910.KS", score: "62", tag: "High beta", note: "Theme clean. Profitability weak." },
+  ],
+  ko: [
+    { name: "엔비디아", ticker: "NVDA", score: "88", tag: "AI 플랫폼", note: "퀄리티 리더. 밸류 체크 필요." },
+    { name: "현대차", ticker: "005380.KS", score: "81", tag: "Boston Dynamics", note: "직접 프록시. 자동차 업황 노이즈." },
+    { name: "테라다인", ticker: "TER", score: "76", tag: "자동화 장비", note: "상승 강함. 모멘텀 훼손 체크." },
+    { name: "두산로보틱스", ticker: "454910.KS", score: "62", tag: "고베타", note: "테마 깔끔. 수익성 약함." },
+  ],
+} satisfies Record<Lang, Array<{ name: string; ticker: string; score: string; tag: string; note: string }>>;
+
+const signalStack = {
+  en: [
+    { label: "Physical AI", value: "Active", tone: "bull" },
+    { label: "US AI semis", value: "Holding trend", tone: "bull" },
+    { label: "Korea robot pure plays", value: "Volatile", tone: "warn" },
+    { label: "Watch item", value: "Margin proof", tone: "neutral" },
+  ],
+  ko: [
+    { label: "피지컬 AI", value: "활성", tone: "bull" },
+    { label: "미국 AI 반도체", value: "추세 유지", tone: "bull" },
+    { label: "국내 로봇 순수주", value: "변동성 큼", tone: "warn" },
+    { label: "체크포인트", value: "마진 증명", tone: "neutral" },
+  ],
+} satisfies Record<Lang, Array<{ label: string; value: string; tone: "bull" | "warn" | "neutral" }>>;
 
 const assetTypeLabels: Record<Lang, Record<Asset["asset_type"], string>> = {
   en: {
@@ -139,6 +229,47 @@ export default async function Home({
     >
       <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_360px] lg:px-8">
         <section className="space-y-4">
+          <Panel title={t.aiWorkspace} icon={<Sparkles className="h-4 w-4" />}>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+              {aiModules[lang].map((item) => (
+                <article key={item.title} className="rounded-md border border-zinc-200 bg-zinc-50 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-sm font-semibold text-zinc-950">{item.title}</h2>
+                    <span className="rounded bg-white px-2 py-1 text-xs font-semibold text-zinc-500">
+                      {item.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-zinc-600">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </Panel>
+
+          <Panel id="stock-picker" title={t.stockPicker} icon={<LineChart className="h-4 w-4" />}>
+            <div className="grid gap-3 md:grid-cols-2">
+              {ideaQueue[lang].map((item) => (
+                <article key={item.ticker} className="rounded-md border border-zinc-200 bg-white p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h2 className="text-base font-semibold text-zinc-950">{item.name}</h2>
+                        <span className="rounded bg-zinc-100 px-2 py-1 font-mono text-xs font-semibold text-zinc-600">
+                          {item.ticker}
+                        </span>
+                      </div>
+                      <div className="mt-1 text-xs font-semibold uppercase text-blue-700">{item.tag}</div>
+                    </div>
+                    <div className="rounded-md bg-zinc-950 px-3 py-2 text-center text-white">
+                      <div className="text-lg font-semibold">{item.score}</div>
+                      <div className="text-[10px] font-semibold uppercase text-zinc-300">Score</div>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-zinc-600">{item.note}</p>
+                </article>
+              ))}
+            </div>
+          </Panel>
+
           <Panel title={t.popularAssets} icon={<BarChart3 className="h-4 w-4" />}>
             <div className="overflow-hidden rounded-md border border-zinc-200">
               <div className="grid grid-cols-[1.2fr_0.7fr_0.8fr_0.7fr] bg-zinc-100 px-3 py-2 text-xs font-semibold uppercase text-zinc-500">
@@ -208,6 +339,32 @@ export default async function Home({
         </section>
 
         <aside className="space-y-4">
+          <Panel title={t.marketBrief} icon={<Sparkles className="h-4 w-4" />}>
+            <div className="space-y-3 text-sm leading-6 text-zinc-600">
+              <p>{lang === "ko" ? "AI 인프라 강세. 로봇주는 촉매 대기." : "AI infrastructure leads. Robotics waits for proof."}</p>
+              <p>{lang === "ko" ? "순수주는 가볍게. 플랫폼주는 중심축." : "Keep pure plays light. Platform names stay core."}</p>
+            </div>
+          </Panel>
+
+          <Panel id="smart-signals" title={t.signalStack} icon={<Signal className="h-4 w-4" />}>
+            <div className="space-y-2">
+              {signalStack[lang].map((item) => (
+                <div key={item.label} className="flex items-center justify-between gap-3 rounded-md border border-zinc-200 bg-white p-3">
+                  <span className="text-sm font-medium text-zinc-700">{item.label}</span>
+                  <span className={signalClass(item.tone)}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </Panel>
+
+          <Panel id="smart-money" title={t.smartMoney} icon={<Search className="h-4 w-4" />}>
+            <div className="space-y-2 text-sm">
+              <FeedRow label={lang === "ko" ? "내부자" : "Insiders"} value={lang === "ko" ? "연동 예정" : "Pending"} />
+              <FeedRow label={lang === "ko" ? "기관 수급" : "Institutions"} value={lang === "ko" ? "연동 예정" : "Pending"} />
+              <FeedRow label={lang === "ko" ? "큰손 추적" : "Whale flow"} value={lang === "ko" ? "연동 예정" : "Pending"} />
+            </div>
+          </Panel>
+
           <Panel title={t.marketThemes} icon={<Bot className="h-4 w-4" />}>
             <Link
               href={`/physical-ai?lang=${lang}`}
@@ -255,16 +412,18 @@ export default async function Home({
 }
 
 function Panel({
+  id,
   title,
   icon,
   children,
 }: {
+  id?: string;
   title: string;
   icon: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-md border border-zinc-200 bg-white p-4 shadow-sm">
+    <section id={id} className="scroll-mt-4 rounded-md border border-zinc-200 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-zinc-800">
         <span className="text-zinc-500">{icon}</span>
         {title}
@@ -353,4 +512,11 @@ function severityClass(severity: "low" | "medium" | "high") {
   if (severity === "high") return `${base} bg-red-100 text-red-700`;
   if (severity === "medium") return `${base} bg-amber-100 text-amber-700`;
   return `${base} bg-emerald-100 text-emerald-700`;
+}
+
+function signalClass(tone: "bull" | "warn" | "neutral") {
+  const base = "rounded px-2 py-1 text-xs font-semibold";
+  if (tone === "bull") return `${base} bg-emerald-100 text-emerald-700`;
+  if (tone === "warn") return `${base} bg-amber-100 text-amber-700`;
+  return `${base} bg-zinc-100 text-zinc-700`;
 }

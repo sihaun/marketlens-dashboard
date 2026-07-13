@@ -1,4 +1,4 @@
-import { BarChart3, Bot, Languages } from "lucide-react";
+import { BarChart3, Bot, Languages, LineChart, Search, Signal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -9,12 +9,20 @@ type ActivePage = "overview" | "physical-ai";
 const navCopy = {
   en: {
     overview: "Overview",
+    tools: "Tools",
+    stockPicker: "AI Stock Picker",
+    smartSignals: "Smart Signals",
+    smartMoney: "Smart Money",
     themes: "Themes",
     physicalAi: "Physical AI",
     language: "Language",
   },
   ko: {
     overview: "대시보드",
+    tools: "도구",
+    stockPicker: "AI Stock Picker",
+    smartSignals: "Smart Signals",
+    smartMoney: "Smart Money",
     themes: "테마",
     physicalAi: "피지컬 AI",
     language: "언어",
@@ -58,6 +66,30 @@ export function AppShell({
                   active={active === "overview"}
                   icon={<BarChart3 className="h-4 w-4" />}
                   label={t.overview}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="px-2 text-xs font-semibold uppercase text-zinc-400">{t.tools}</div>
+              <div className="mt-2 space-y-1">
+                <NavItem
+                  href={`/?lang=${lang}#stock-picker`}
+                  active={false}
+                  icon={<LineChart className="h-4 w-4" />}
+                  label={t.stockPicker}
+                />
+                <NavItem
+                  href={`/?lang=${lang}#smart-signals`}
+                  active={false}
+                  icon={<Signal className="h-4 w-4" />}
+                  label={t.smartSignals}
+                />
+                <NavItem
+                  href={`/?lang=${lang}#smart-money`}
+                  active={false}
+                  icon={<Search className="h-4 w-4" />}
+                  label={t.smartMoney}
                 />
               </div>
             </div>
